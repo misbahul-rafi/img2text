@@ -1,6 +1,5 @@
 import pytesseract
 from .preprocess import preprocess
-import re
 
 def convert2image(image_path):
     processed_image = preprocess(image_path)
