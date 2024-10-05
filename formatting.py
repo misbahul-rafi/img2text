@@ -1,26 +1,9 @@
 import re
 
 def formatting(data_list):
+    category = {}
     categories = []
     errors = []
-    attacks_classification = [
-        {
-            "attack": "Web App Attack",
-            "firewall": "Check Point"
-        },
-        {
-            "attack": "Web Scanner",
-            "firewall": "Check Point"
-        },
-        {
-            "attack": "Sophos IPS",
-            "firewall": "Sophos BGR, JTN dan PTM"
-        },
-        {
-            "attack": "Sangfor",
-            "firewall": "NGAF-01"
-        }
-    ]
     to_remove = ['-', '&', r'Vv', '!', '@', '#', 'Telkomsat', r'\s\s', r'\s\s\s', "Possible"]
     
     for index, data in enumerate(data_list):
@@ -31,47 +14,26 @@ def formatting(data_list):
         ip = ip.group(1).strip() if ip else None
 
         if not detection or not ip:
-            errors.append(f"file {index + 1} can't read")
+            errors.append(f"Tidak dapat membaca file: {index + 1}")
             continue
 
         if detection and ip:
+            # Menghapus karakter yang tidak diinginkan dari detection
             for char in to_remove:
                 detection = re.sub(char, '', detection).strip()
+
+            # Memeriksa apakah detection sudah ada di dalam list categories
+            if any(category['category'] == detection for category in categories):
+                print("Sudah ada")
+            else:
+                print(detection, "belum ada di", categories)
+                categories.append({"category": detection})
+                categories.append("contains": [])
+                # categories.append({"content": detection})
                 
-        existing_item = next((item for item in categories if item["detection"] == detection), None)
-        if existing_item:
-            existing_item["ip"].append(ip)
-            existing_item["content"].append(data)
-        else:
-            include = {
-                'detection': detection,
-                'ip': [ip],
-                'content': [data]
-            }
-            categories.append(include)
-            
-    results = []
-    for category in categories:
-        detection = category["detection"]
-        ip_string = " ".join(category["ip"])
-        title = f"{detection} {ip_string}"
-        
-        closed = ''
-        for item in attacks_classification:
-            if detection in item["attack"]:
-                closed = f"Sudah dilakukan blocking IP Source untuk {detection} pada firewall {item['firewall']} dengan detail IP {ip_string}"
-        
-        result = {
-            "title": title,
-            "closed": closed,
-            "content": "\n".join(category["content"])
-        }
-        results.append(result)
-    return {
-        "error": errors,
-        "results": results
-    }
-    return response
+                # categories.append({"ip": ip})
+                # categories.append({"content": data})
+    return categories
     closed_messages = []
     for detection, ips in category.items():
         if 'Web Scanner' in detection:
