@@ -2,7 +2,6 @@ from flask import request, jsonify, current_app
 from app.utils import convert2image, formatting
 from app.models.image_model import ImageModel
 import os
-import json
 
 
 class ImageController:
