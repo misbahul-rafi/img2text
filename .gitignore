@@ -7,7 +7,7 @@ env/
 venv/
 ENV/
 .venv/
-
+uploads/
 # Python package distribution
 *.egg-info/
 dist/
