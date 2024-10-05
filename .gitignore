@@ -1,5 +1,6 @@
 # Byte compiled files
 __pycache__/
+*__pycache__/
 *.py[cod]
 
 # Virtual environments
@@ -8,6 +9,7 @@ venv/
 ENV/
 .venv/
 uploads/
+
 # Python package distribution
 *.egg-info/
 dist/
