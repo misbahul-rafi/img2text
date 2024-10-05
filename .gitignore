@@ -1,0 +1,30 @@
+# Byte compiled files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+
+# Python package distribution
+*.egg-info/
+dist/
+build/
+
+# Editor config
+*.swp
+*.swo
+*.idea/
+*.vscode/
+*.pydev/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Logs
+*.log
+
+# Environment variables
+.env
